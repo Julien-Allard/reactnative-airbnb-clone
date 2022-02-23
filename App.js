@@ -10,6 +10,7 @@ import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import SplashScreen from "./containers/SplashScreen";
+import RoomScreen from "./containers/RoomScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -56,10 +57,10 @@ export default function App() {
           // No token found, user isn't signed in
           <>
             <Stack.Screen name="SignIn">
-              {() => <SignInScreen setToken={setToken} />}
+              {(props) => <SignInScreen {...props} setToken={setToken} />}
             </Stack.Screen>
             <Stack.Screen name="SignUp">
-              {() => <SignUpScreen setToken={setToken} />}
+              {(props) => <SignUpScreen {...props} setToken={setToken} />}
             </Stack.Screen>
           </>
         ) : (
@@ -87,9 +88,10 @@ export default function App() {
                       <Stack.Screen
                         name="Home"
                         options={{
-                          title: "My App",
-                          headerStyle: { backgroundColor: "red" },
+                          title: "Home Page",
+                          headerStyle: { backgroundColor: "#E41D59" },
                           headerTitleStyle: { color: "white" },
+                          headerTitleAlign: "center",
                         }}
                       >
                         {() => <HomeScreen />}
@@ -102,6 +104,18 @@ export default function App() {
                         }}
                       >
                         {() => <ProfileScreen />}
+                      </Stack.Screen>
+
+                      <Stack.Screen
+                        name="Room"
+                        options={{
+                          title: "Room Details",
+                          headerStyle: { backgroundColor: "#E41D59" },
+                          headerTitleStyle: { color: "white" },
+                          headerTitleAlign: "center",
+                        }}
+                      >
+                        {() => <RoomScreen />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
