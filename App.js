@@ -115,7 +115,7 @@ export default function App() {
                           headerTitleAlign: "center",
                         }}
                       >
-                        {() => <RoomScreen />}
+                        {(props) => <RoomScreen {...props} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

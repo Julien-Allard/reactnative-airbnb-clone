@@ -35,13 +35,9 @@ export default function SignInScreen({ setToken }) {
 
         // console.log(response.data);
 
-        if (response.data.token) {
-          const token = response.data.token;
-          setToken(token);
-          alert("Connexion réussie !");
-        } else {
-          alert("Email/mot de passe incorrect");
-        }
+        const token = response.data.token;
+        setToken(token);
+        alert("Connexion réussie !");
       }
     } catch (error) {
       console.log(error.response.data);

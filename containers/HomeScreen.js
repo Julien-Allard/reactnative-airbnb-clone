@@ -7,6 +7,7 @@ import {
   ScrollView,
   StyleSheet,
   Image,
+  ImageBackground,
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
@@ -61,11 +62,15 @@ export default function HomeScreen() {
               navigation.navigate("Room", { roomId: item._id });
             }}
           >
-            <Image
+            <ImageBackground
               source={{ uri: item.photos[0].url }}
               style={styles.cardImg}
               resizeMode="cover"
-            />
+            >
+              <View style={styles.priceView}>
+                <Text style={styles.priceMain}>{item.price} €</Text>
+              </View>
+            </ImageBackground>
 
             {/* Détails de chaque élément */}
             <View style={styles.cardDetails}>
@@ -159,6 +164,19 @@ const styles = StyleSheet.create({
   cardImg: {
     width: 360,
     height: 180,
+    justifyContent: "flex-end",
+  },
+  priceView: {
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    width: 100,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  priceMain: {
+    color: "white",
+    fontSize: 16,
   },
   cardDetails: {
     flexDirection: "row",
