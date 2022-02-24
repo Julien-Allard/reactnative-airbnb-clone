@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRoute } from "@react-navigation/core";
 import { useEffect, useState } from "react";
+import MapView from "react-native-maps";
 import { Entypo } from "@expo/vector-icons";
 import axios from "axios";
 
@@ -128,6 +129,23 @@ export default function RoomScreen() {
           )}
         </TouchableHighlight>
       </View>
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: data.location[1],
+          longitude: data.location[0],
+          latitudeDelta: 0.09,
+          longitudeDelta: 0.09,
+        }}
+      >
+        <MapView.Marker
+          coordinate={{
+            latitude: data.location[1],
+            longitude: data.location[0],
+          }}
+          title={data.title}
+        />
+      </MapView>
     </ScrollView>
   );
 }
@@ -191,5 +209,11 @@ const styles = StyleSheet.create({
   },
   show: {
     color: "grey",
+  },
+
+  //map
+  map: {
+    width: 395,
+    height: 300,
   },
 });
