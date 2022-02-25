@@ -76,7 +76,7 @@ export default function AroundMeScreen() {
       </View>
       <View style={styles.txtContainer}>
         <Text style={styles.introTxt}>
-          Find all the avaiable offers around you !
+          Find all the available offers around you !
         </Text>
       </View>
 

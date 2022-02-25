@@ -4,13 +4,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import HomeScreen from "./containers/HomeScreen";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
-import SplashScreen from "./containers/SplashScreen";
 import RoomScreen from "./containers/RoomScreen";
 import AroundMeScreen from "./containers/AroundMeScreen";
 
@@ -20,15 +20,21 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
+  const [userId, setUserId] = useState(null);
 
-  const setToken = async (token) => {
+  const setToken = async (token, id) => {
     if (token) {
       await AsyncStorage.setItem("userToken", token);
+      if (id) {
+        await AsyncStorage.setItem("userId", id);
+      }
     } else {
       await AsyncStorage.removeItem("userToken");
+      await AsyncStorage.removeItem("userId");
     }
 
     setUserToken(token);
+    setUserId(id);
   };
 
   useEffect(() => {
@@ -36,10 +42,12 @@ export default function App() {
     const bootstrapAsync = async () => {
       // We should also handle error for production apps
       const userToken = await AsyncStorage.getItem("userToken");
+      const userIdentity = await AsyncStorage.getItem("userId");
 
       // This will switch to the App screen or Auth screen and this loading
       // screen will be unmounted and thrown away.
       setUserToken(userToken);
+      setUserId(userIdentity);
 
       setIsLoading(false);
     };
@@ -99,14 +107,14 @@ export default function App() {
                         {() => <HomeScreen />}
                       </Stack.Screen>
 
-                      <Stack.Screen
+                      {/* <Stack.Screen
                         name="Profile"
                         options={{
                           title: "User Profile",
                         }}
                       >
                         {() => <ProfileScreen />}
-                      </Stack.Screen>
+                      </Stack.Screen> */}
 
                       <Stack.Screen
                         name="Room"
@@ -154,10 +162,10 @@ export default function App() {
                 <Tab.Screen
                   name="TabSettings"
                   options={{
-                    tabBarLabel: "Settings",
+                    tabBarLabel: "My Profile",
                     tabBarIcon: ({ color, size }) => (
-                      <Ionicons
-                        name={"ios-options"}
+                      <MaterialCommunityIcons
+                        name={"account-settings"}
                         size={size}
                         color={color}
                       />
@@ -172,7 +180,13 @@ export default function App() {
                           title: "Settings",
                         }}
                       >
-                        {() => <SettingsScreen setToken={setToken} />}
+                        {() => (
+                          <SettingsScreen
+                            setToken={setToken}
+                            userId={userId}
+                            userToken={userToken}
+                          />
+                        )}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

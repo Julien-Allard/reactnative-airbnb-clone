@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/core";
 import {
-  Button,
   Text,
   TextInput,
   View,
@@ -8,7 +7,6 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import axios from "axios";
 import { useState } from "react";
@@ -36,7 +34,8 @@ export default function SignInScreen({ setToken }) {
         // console.log(response.data);
 
         const token = response.data.token;
-        setToken(token);
+        const id = response.data.id;
+        setToken(token, id);
         alert("Connexion réussie !");
       }
     } catch (error) {

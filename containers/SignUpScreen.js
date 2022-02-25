@@ -1,5 +1,4 @@
 import {
-  Button,
   Text,
   TextInput,
   View,
@@ -47,7 +46,8 @@ export default function SignUpScreen({ setToken, navigation }) {
         );
 
         const token = response.data.token;
-        setToken(token);
+        const id = response.data.id;
+        setToken(token, id);
         setError("");
 
         // console.log(response.data);
